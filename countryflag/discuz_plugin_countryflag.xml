@@ -14,7 +14,7 @@
 			<item id="datatables"><![CDATA[]]></item>
 			<item id="directory"><![CDATA[countryflag/]]></item>
 			<item id="copyright"><![CDATA[Valery Votintsev, codersclub.org. jaideejung007, discuzthai.com]]></item>
-			<item id="version"><![CDATA[2.0]]></item>
+			<item id="version"><![CDATA[2.0.1]]></item>
 			<item id="__modules">
 				<item id="0">
 					<item id="name"><![CDATA[countryflag]]></item>
@@ -31,6 +31,26 @@
 			</item>
 		</item>
 		<item id="version"><![CDATA[X3.5]]></item>
+			<item id="license"><![CDATA[ขอบคุณที่เลือกใช้ปลั๊กอินนี้
+ก่อนที่จะทำการติดตั้งปลั๊กอินนี้ กรุณาอ่านข้อระวังด้านล่างนี้ก่อน:
+
+[b]ข้อมูลการติดตั้ง[/b]
+[1] เขียนโดย [url=https://codersclub.org/discuzx/home.php?mod=space&uid=1]Valery Votintsev[/url]
+[2] พัฒนาให้รองรับ X3.5 และแปลภาษาไทย โดย [url=https://discuzthai.com]jaideejung007[/url]
+[3] ต้นฉบับไอเดียโดย [url=https://codersclub.org/discuzx/home.php?mod=space&uid=1563]KEN[/url]
+[4] ปลั๊กอินนี้สามารถใช้ได้เฉพาะ Discuz! X 3.5 Rev.1+ เท่านั้น
+[5] ปลั๊กอินนี้ไม่มีการเข้าไปดำเนินการเกี่ยวกับฐานข้อมูลแต่อย่างใด
+[6] ปลั๊กอินนี้ไม่มีการเข้าไปแก้ไขไฟล์ใด ๆ ในระบบ Discuz!
+
+[b]ใบอนุญาตการใช้งาน[/b]
+[1] ใบอนุญาตการใช้งานนี้ อยู่ภายใต้ของตกลงของ Creative Commons Attribution 3.0 License.
+[2] แสดงที่มา — คุณต้องแสดงที่มาของงานดังกล่าว ตามรูปแบบที่ผู้สร้างสรรค์หรือผู้อนุญาตกำหนด (แต่ไม่ใช่ในลักษณะที่ว่า พวกเขาสนับสนุนคุณหรือสนับสนุนการที่คุณนำงานไปใช้)
+[3] ไม่ใช้เพื่อการค้า — คุณไม่อาจใช้งานนี้เพื่อวัตถุประสงค์ทางการค้า
+[4] อนุญาตแบบเดียวกัน — หากคุณดัดแปลง เปลี่ยนรูป หรือต่อเติมงานนี้ คุณต้องใช้สัญญาอนุญาตแบบเดียวกันหรือแบบที่เหมือนกับสัญญาอนุญาตที่ใช้กับงานนี้เท่านั้น
+[5] เงื่อนไขใด ๆ ข้างต้น อาจยกเว้นได้ หากคุณได้รับอนุญาตจากผู้ถือครองลิขสิทธิ์
+
+ขอต้อนรับเข้าสู่ [url=https://codersclub.org/discuzx/]กลุ่มผู้ใช้งาน CodersClub[/url] และ [url=https://discuzthai.com]กลุ่มผู้ใช้งานกระดานข่าว ดิสคัส! ในประเทศไทย![/url]
+]]></item>
 		<item id="var">
 			<item id="0">
 				<item id="displayorder"><![CDATA[0]]></item>

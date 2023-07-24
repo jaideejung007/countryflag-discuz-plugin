@@ -16,6 +16,7 @@
  *  V1.7 UPDATE 20130712 by vot
  *  V1.8 UPDATE 20130724 by vot
  *  V2.0 UPDATE 20230715 by jaideejung007
+ *  V2.0.1 UPDATE 20230724 by jaideejung007
  */
 
 if(!defined('IN_DISCUZ')) {
@@ -101,41 +102,55 @@ class plugin_countryflag_forum extends plugin_countryflag {
      * country คือ ชื่อประเทศ เช่น Thailand
      */
     $return = '';
-    // แยกไอพีเพื่อใช้สำหรับตรวจสอบไอพีในขั้นตอนต่อไป
-    if(preg_match("/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/", $ip)) {
-      $iparray = explode('.', $ip);
-      // ตรวจสอบไอพีถูกต้องหรือไม่
-      if($iparray[0] == 10 || ($iparray[0] == 192 && $iparray[1] == 168) || ($iparray[0] == 172 && ($iparray[1] >= 16 && $iparray[1] <= 31))) {
-        $return = 'LAN';
-      } elseif($iparray[0] == 127) {
-        $return = 'Localhost';
-      } elseif($iparray[0] > 255 || $iparray[1] > 255 || $iparray[2] > 255 || $iparray[3] > 255) {
-        $return = 'Invalid IP Address';
+    // ตรวจสอบว่าเป็น IPv4 หรือ IPv6 หรือไม่ หากใช่ ให้ทำการแยกไอพี IPv4 เพื่อใช้สำหรับตรวจสอบไอพีในขั้นตอนต่อไป
+    if ($this->isValidIP($ip)) {
+      $iparray = (strpos($ip, ':') !== false) ? explode(':', $ip) : explode('.', $ip);
+      // ตรวจสอบความถูกต้องของไอพีว่าเป็น LAN, Localhost หรือไม่
+      if ($iparray[0] == 10 || ($iparray[0] == 192 && $iparray[1] == 168) || ($iparray[0] == 172 && ($iparray[1] >= 16 && $iparray[1] <= 31))) {
+          $return = 'LAN';
+      } elseif ($iparray[0] == 127) {
+          $return = 'Localhost';
+      } elseif (count($iparray) == 4 && ($iparray[0] > 255 || $iparray[1] > 255 || $iparray[2] > 255 || $iparray[3] > 255)) {
+          $return = 'Invalid IP Address';
       } else {
-        // หากไอพีถูกต้อง ให้เริ่มทำการแปลงไอพีเป็นชื่อประเทศ
-        require_once constant("DISCUZ_ROOT").'./data/ipdata/geoip2.phar';
-        $ipdatafile = constant("DISCUZ_ROOT").'./data/ipdata/GeoLite2-City.mmdb';
-        $reader = new GeoIp2\Database\Reader($ipdatafile);
-        try {
-          $jdzrecord = $reader->city($ip);
-          if($isoCode) {
-            $return = $jdzrecord->country->isoCode; // รหัสประเทศ เช่น TH
+          // หากไอพีถูกต้อง ให้เริ่มทำการแปลงไอพีเป็นชื่อประเทศ
+          require_once constant("DISCUZ_ROOT").'./data/ipdata/geoip2.phar';
+          $ipdatafile = constant("DISCUZ_ROOT").'./data/ipdata/GeoLite2-City.mmdb';
+          $reader = new GeoIp2\Database\Reader($ipdatafile);
+          try {
+            $jdzrecord = $reader->city($ip);
+            if($isoCode) {
+              $return = $jdzrecord->country->isoCode; // รหัสประเทศ เช่น TH
+            }
+            if($city) {
+              $return = $jdzrecord->city->name; // ชื่อเมือง/นคร/เขต เช่น Ban Dan
+            }
+            if($country) {
+              $return = $jdzrecord->country->name; // ชื่อประเทศ เช่น Thailand
+            }
+          } catch (Exception $e) {
+            $return = 'ERR';
           }
-          if($city) {
-            $return = $jdzrecord->city->name; // ชื่อเมือง/นคร/เขต เช่น Ban Dan
+          if(!@$return) {
+            $return = '??';
           }
-          if($country) {
-            $return = $jdzrecord->country->name; // ชื่อประเทศ เช่น Thailand
-          }
-        } catch (Exception $e) {
-          $return = 'ERR';
-        }
-        if(!@$return) {
-          $return = '??';
-        }
       }
+    } else {
+      $return = 'Invalid IP Address';
     }
     return $return;
   }
 
+  function isValidIP($ip) {
+    // Check if it's a valid IPv6 address
+    if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) !== false) {
+        return true;
+    }
+  
+    // Check if it's a valid IPv4 address
+    if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) !== false) {
+        return true;
+    }
+    return false;
+  }  
 }
